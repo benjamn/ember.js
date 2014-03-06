@@ -3,6 +3,7 @@
     "defeatureify": "~0.2.0",
     "yuidocjs": "~0.3.46",
     "es6-module-transpiler": "~0.3.6",
+    "regenerator": "~0.4.1",
     "glob": "~3.2.8"
   }
 }

@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 var Compiler = require('es6-module-transpiler').Compiler;
+var regenerator = require('regenerator');
 var fs = require('fs');
 var path = require('path');
 var glob = require('glob');
@@ -50,16 +51,20 @@ ES6Package.prototype = {
     }
 
     try {
-      compiler = new Compiler(fs.readFileSync(filename), moduleName);
-      return {name: moduleName, compiled: compiler.toAMD()};
+      compiler = new Compiler(
+        fs.readFileSync(filename, "utf-8"),
+        moduleName
+      );
+
+      return {
+        name: moduleName,
+        compiled: regenerator(compiler.toAMD())
+      };
     } catch (e) {
       console.log('An error was raised while compiling "' + filename + '".');
       console.log('   ' + e.message);
       process.exit(1);
     }
-
-    var compiler = new Compiler(fs.readFileSync(filename), moduleName);
-    return {name: moduleName, compiled: compiler.toAMD()};
   },
 
   processLib: function(){
